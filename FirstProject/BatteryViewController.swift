@@ -27,6 +27,11 @@ class BatteryViewController: UIViewController {
         return equipmentCabinetImgV
     }()
     
+    lazy var waveAnimationView: WaveAnimationView = {
+        let waveAnimationView = WaveAnimationView()
+        return waveAnimationView
+    }()
+    
     lazy var batteryPercentImgV: UIImageView = {
         let batteryPercentImgV = UIImageView()
         batteryPercentImgV.image = .init(named: "battery_percent")
@@ -104,13 +109,13 @@ class BatteryViewController: UIViewController {
         super.viewDidLoad()
         setupSubviews()
         makeConstraints()
-        makeWaveAnimation()
     }
     
     func setupSubviews() {
         view.backgroundColor = .init(hex: 0x2B445E)
         view.addSubview(titleLab)
         view.addSubview(equipmentCabinetImgV)
+        equipmentCabinetImgV.addSubview(waveAnimationView)
         view.addSubview(batteryPercentImgV)
         view.addSubview(percentLab)
         view.addSubview(batteryLocaltionImgV)
@@ -131,6 +136,11 @@ class BatteryViewController: UIViewController {
             make.top.equalTo(titleLab.snp.bottom).offset(18)
             make.centerX.equalToSuperview()
             make.size.equalTo(CGSize(width: 166, height: 240))
+        }
+        waveAnimationView.snp.makeConstraints { make in
+            make.left.right.equalToSuperview().inset(10)
+            make.bottom.equalToSuperview().inset(10)
+            make.height.equalTo(195 * CGFloat(value) / 100.0)
         }
         percentLab.snp.makeConstraints { make in
             make.centerX.equalTo(equipmentCabinetImgV)
@@ -174,94 +184,77 @@ class BatteryViewController: UIViewController {
             make.height.equalTo(24)
         }
     }
-    
-    func makeWaveAnimation() {
-        let y = Double(100 - value) / 100.0 * 195.0 + 23 + 10
-        let animationRect: CGRect = .init(x: 10, y: y, width: 146, height: 240 - y)
-        let waveAnimation1 = CABasicAnimation(keyPath: "path")
-        waveAnimation1.fromValue = generateClosedSinePath(in: animationRect)
-        waveAnimation1.toValue = generateClosedSinePath(in: animationRect, phase: 2 * Double.pi)
-        waveAnimation1.duration = 4
-        waveAnimation1.repeatCount = .greatestFiniteMagnitude
-        let layer = CAShapeLayer()
-        layer.frame = animationRect
-        layer.path = generateClosedSinePath(in: animationRect).cgPath
-        layer.add(waveAnimation1, forKey: "key1")
-        
-        equipmentCabinetImgV.layer.addSublayer(layer)
-    }
 }
 
 extension BatteryViewController {
     
-    /// 生成正弦曲线路径
-    /// - Parameters:
-    ///   - frame: 路径所在的矩形区域
-    ///   - amplitude: 振幅（波浪高度）
-    ///   - frequency: 频率（波浪密集度）
-    ///   - phase: 相位（水平偏移）
-    ///   - offsetY: Y轴偏移量（控制曲线上下位置）
-    /// - Returns: 生成的正弦曲线路径
-    func generateSinePath(
-        in frame: CGRect,
-        amplitude: CGFloat = 50,
-        frequency: CGFloat = 0.02,
-        phase: CGFloat = 0,
-        offsetY: CGFloat = 0
-    ) -> UIBezierPath {
-        let path = UIBezierPath()
-        let width = frame.width
-        let height = frame.height
+    class WaveAnimationView: UIView {
         
-        // 计算Y轴中点，作为正弦曲线的基准线
-        let midY = height / 2 + offsetY
+        // y =Asin(ωx + φ）+ k
         
-        // 从左侧开始绘制
-        let startX: CGFloat = 0
-        // 计算起始点的Y值
-        let startY = amplitude * sin(frequency * startX + phase) + midY
-        path.move(to: CGPoint(x: startX, y: startY))
-        
-        // 逐点绘制正弦曲线
-        // 为了性能，可以适当调整步长，这里每1个点绘制一次
-        for x in stride(from: 0, through: width, by: 1) {
-            let xValue = CGFloat(x)
-            // 正弦函数公式：y = A * sin(ωx + φ) + k
-            let yValue = amplitude * sin(frequency * xValue + phase) + midY
-            path.addLine(to: CGPoint(x: xValue, y: yValue))
+        // 振幅A
+        var waveAlpha: CGFloat {
+            5
         }
         
-        return path
-    }
-    
-    /// 生成闭合的正弦波浪路径（常用于填充效果）
-    /// - Parameters:
-    ///   - frame: 路径所在的矩形区域
-    ///   - amplitude: 振幅（波浪高度）
-    ///   - frequency: 频率（波浪密集度）
-    ///   - phase: 相位（水平偏移）
-    ///   - offsetY: Y轴偏移量（控制曲线上下位置）
-    /// - Returns: 生成的闭合正弦波浪路径
-    func generateClosedSinePath(
-        in frame: CGRect,
-        amplitude: CGFloat = 50,
-        frequency: CGFloat = 0.02,
-        phase: CGFloat = 0,
-        offsetY: CGFloat = 0
-    ) -> UIBezierPath {
-        let path = generateSinePath(
-            in: frame,
-            amplitude: amplitude,
-            frequency: frequency,
-            phase: phase,
-            offsetY: offsetY
-        )
+        /// 角速度ω
+        var omega: CGFloat {
+            CGFloat.pi * 2 / mWidth
+        }
         
-        // 闭合路径，连接到右下角和左下角
-        path.addLine(to: CGPoint(x: frame.width, y: frame.height))
-        path.addLine(to: CGPoint(x: 0, y: frame.height))
-        path.close()
+        /// 初相φ
+        var phi1: CGFloat = 0
         
-        return path
+        var phi2: CGFloat = CGFloat.pi * 0.5
+        
+        lazy var forwardWaveLayer: CAShapeLayer = {
+            let forwardWaveLayer = CAShapeLayer()
+            forwardWaveLayer.fillColor = UIColor(hex: 0xE39400, a: 0.3).cgColor
+            return forwardWaveLayer
+        }()
+        
+        lazy var backWaveLayer: CAShapeLayer = {
+            let backWaveLayer = CAShapeLayer()
+            backWaveLayer.fillColor = UIColor(hex: 0xE39400, a: 0.5).cgColor
+            return backWaveLayer
+        }()
+        
+        override init(frame: CGRect) {
+            super.init(frame: frame)
+            layer.masksToBounds = true
+            layer.addSublayer(backWaveLayer)
+            layer.addSublayer(forwardWaveLayer)
+            
+            let link = CADisplayLink(target: self, selector: #selector(setCurrentFirstWaveLayerPath))
+            link.add(to: .main, forMode: .common)
+        }
+        
+        required init?(coder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+        
+        
+        @objc func setCurrentFirstWaveLayerPath() {
+            func getPath(kappa: CGFloat, phi: CGFloat) -> CGPath {
+                let path = CGMutablePath()
+                path.move(to: .init(x: 0, y: mHeight))
+                for x in (0...Int(mWidth)) {
+                    let y = waveAlpha * CGFloat(sin(omega * CGFloat(x) + phi)) + kappa
+                    path.addLine(to: .init(x: CGFloat(x), y: y))
+                }
+                path.addLine(to: .init(x: mWidth, y: mHeight))
+                path.addLine(to: .init(x: 0, y: mHeight))
+                path.closeSubpath()
+                
+                return path
+            }
+            
+            forwardWaveLayer.path = getPath(kappa: -5, phi: phi1)
+            
+            backWaveLayer.path = getPath(kappa: 5, phi: phi2)
+            
+            phi1 += 0.1
+            phi2 += 0.1
+        }
     }
 }
