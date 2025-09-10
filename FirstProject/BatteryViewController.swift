@@ -27,6 +27,13 @@ class BatteryViewController: UIViewController {
         return equipmentCabinetImgV
     }()
     
+    lazy var animationShowArea: UIView = {
+        let animationShowArea = UIView()
+        animationShowArea.layer.cornerRadius = 13.3
+        animationShowArea.layer.masksToBounds = true
+        return animationShowArea
+    }()
+    
     lazy var waveAnimationView: WaveAnimationView = {
         let waveAnimationView = WaveAnimationView()
         return waveAnimationView
@@ -115,7 +122,8 @@ class BatteryViewController: UIViewController {
         view.backgroundColor = .init(hex: 0x2B445E)
         view.addSubview(titleLab)
         view.addSubview(equipmentCabinetImgV)
-        equipmentCabinetImgV.addSubview(waveAnimationView)
+        equipmentCabinetImgV.addSubview(animationShowArea)
+        animationShowArea.addSubview(waveAnimationView)
         view.addSubview(batteryPercentImgV)
         view.addSubview(percentLab)
         view.addSubview(batteryLocaltionImgV)
@@ -137,9 +145,12 @@ class BatteryViewController: UIViewController {
             make.centerX.equalToSuperview()
             make.size.equalTo(CGSize(width: 166, height: 240))
         }
+        animationShowArea.snp.makeConstraints { make in
+            make.left.right.bottom.equalToSuperview().inset(10)
+            make.height.equalTo(195)
+        }
         waveAnimationView.snp.makeConstraints { make in
-            make.left.right.equalToSuperview().inset(10)
-            make.bottom.equalToSuperview().inset(10)
+            make.left.right.bottom.equalToSuperview()
             make.height.equalTo(195 * CGFloat(value) / 100.0)
         }
         percentLab.snp.makeConstraints { make in
@@ -221,7 +232,6 @@ extension BatteryViewController {
         
         override init(frame: CGRect) {
             super.init(frame: frame)
-            layer.masksToBounds = true
             layer.addSublayer(backWaveLayer)
             layer.addSublayer(forwardWaveLayer)
             
