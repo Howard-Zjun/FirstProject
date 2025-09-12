@@ -60,6 +60,8 @@ class RealtimeSceneViewController: UIViewController {
     
     let pathSetManager: PathSetManager = .init()
     
+    var batteryContentHeight = 45.23
+    
     lazy var operaQueue: OperationQueue = {
         let operaQueue = OperationQueue()
         operaQueue.maxConcurrentOperationCount = 1
@@ -131,6 +133,18 @@ class RealtimeSceneViewController: UIViewController {
         return batteryImgV
     }()
     
+    lazy var batteryAnimationShowArea: UIView = {
+        let batteryAnimationShowArea = UIView()
+        batteryAnimationShowArea.layer.cornerRadius = 3
+        batteryAnimationShowArea.layer.masksToBounds = true
+        return batteryAnimationShowArea
+    }()
+    
+    lazy var waveAnimationView: WaveAnimationView = {
+        let waveAnimationView = WaveAnimationView()
+        return waveAnimationView
+    }()
+    
     lazy var batteryNameLab: UILabel = {
         let batteryNameLab = UILabel()
         batteryNameLab.font = .systemFont(ofSize: 13, weight: .regular)
@@ -196,6 +210,8 @@ class RealtimeSceneViewController: UIViewController {
         return additionalLoadValueLab
     }()
     
+    var batteryObservation: NSKeyValueObservation?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .init(hex: 0x2B445E)
@@ -203,9 +219,15 @@ class RealtimeSceneViewController: UIViewController {
         makeConstraints()
         startCounter()
         configPath()
-        DispatchQueue.main.asyncAfter(wallDeadline: .now() + 3) {
-            self.powerTransport(fromName: self.gridViewModel.name, toName: self.vehicleViewModel.name)
+        
+        batteryObservation = batteryViewModel.observe(\.power) { [weak self] viewModel, change in
+            self?.updateBatteryAnimation()
         }
+    }
+    
+    deinit {
+        batteryObservation?.invalidate()
+        batteryObservation = nil
     }
     
     func setupSubviews() {
@@ -219,6 +241,8 @@ class RealtimeSceneViewController: UIViewController {
         view.addSubview(gridNameLab)
         view.addSubview(gridValueLab)
         view.addSubview(batteryImgV)
+        batteryImgV.addSubview(batteryAnimationShowArea)
+        batteryAnimationShowArea.addSubview(waveAnimationView)
         view.addSubview(batteryNameLab)
         view.addSubview(batteryValeuLab)
         view.addSubview(vehicleChargingImgV)
@@ -281,6 +305,15 @@ class RealtimeSceneViewController: UIViewController {
             make.top.equalTo(pathImgV).offset(45.44)
             make.right.equalTo(pathImgV.snp.left).offset(-3.99)
         }
+        batteryAnimationShowArea.snp.makeConstraints { make in
+            make.left.right.equalToSuperview().inset(3)
+            make.bottom.equalToSuperview().inset(2.89)
+            make.height.equalTo(batteryContentHeight)
+        }
+        waveAnimationView.snp.makeConstraints { make in
+            make.left.right.bottom.equalToSuperview()
+            make.height.equalTo(batteryContentHeight * CGFloat(batteryViewModel.power) / 100.0)
+        }
         batteryNameLab.snp.makeConstraints { make in
             make.centerX.equalTo(batteryImgV)
             make.bottom.equalTo(batteryImgV.snp.top)
@@ -330,6 +363,12 @@ class RealtimeSceneViewController: UIViewController {
             make.centerX.equalTo(additionalLoadNameLab)
             make.top.equalTo(additionalLoadNameLab.snp.bottom)
             make.height.equalTo(60)
+        }
+    }
+    
+    func updateBatteryAnimation() {
+        waveAnimationView.snp.updateConstraints { make in
+            make.height.equalTo(batteryContentHeight * CGFloat(batteryViewModel.power) / 100.0)
         }
     }
 }
@@ -390,16 +429,16 @@ extension RealtimeSceneViewController {
         RunLoop.current.add(usageExtraReduceTimer, forMode: .common)
         self.usageExtraReduceTimer = usageExtraReduceTimer
         
-//        let transportTimer = Timer.scheduledTimer(withTimeInterval: 10, repeats: true) { [weak self] timer in
-//            guard let self = self else { return }
-//            let source = [solarViewModel.name, gridViewModel.name]
-//            let useSourceIndex = Int.random(in: 0..<source.count)
-//            let to = [batteryViewModel.name, vehicleViewModel.name, additionalLoadViewModel.name]
-//            let useToIndex = Int.random(in: 0..<to.count)
-//            powerTransport(fromName: source[useSourceIndex], toName: to[useToIndex])
-//        }
-//        RunLoop.current.add(transportTimer, forMode: .common)
-//        self.transportTimer = transportTimer
+        let transportTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { [weak self] timer in
+            guard let self = self else { return }
+            let source = [solarViewModel.name, gridViewModel.name]
+            let useSourceIndex = Int.random(in: 0..<source.count)
+            let to = [batteryViewModel.name, vehicleViewModel.name, additionalLoadViewModel.name]
+            let useToIndex = Int.random(in: 0..<to.count)
+            powerTransport(fromName: source[useSourceIndex], toName: to[useToIndex])
+        }
+        RunLoop.current.add(transportTimer, forMode: .common)
+        self.transportTimer = transportTimer
     }
     
     func powerTransport(fromName: String, toName: String) {
@@ -461,7 +500,7 @@ extension RealtimeSceneViewController {
         
         let name: String
         
-        @objc var power: Int = 0 {
+        @objc dynamic var power: Int = 0 {
             didSet {
                 lab?.attributedText = getNowPowerAttr()
             }
@@ -496,14 +535,14 @@ extension RealtimeSceneViewController {
  
     class AnimationLayer: CAShapeLayer {
         
-        // 0.90 是动画头部到达尽头，1是尾部到达尽头
+        // 0.95 是动画头部到达尽头，1是尾部到达尽头
         var progress: CGFloat = 0 {
             didSet {
                 strokeStart = progress
-                if progress >= 0.90 {
+                if progress >= 0.95 {
                     strokeEnd = 1
                 } else {
-                    strokeEnd = progress + 0.1
+                    strokeEnd = progress + 0.05
                 }
             }
         }

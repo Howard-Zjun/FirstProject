@@ -31,6 +31,7 @@
 		B83B84422E6AB851009361A5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B83B84372E6AB851009361A5 /* LaunchScreen.storyboard */; };
 		B83B84432E6AB851009361A5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B83B84392E6AB851009361A5 /* Main.storyboard */; };
 		B8C1D60B2E73C7FD0035454B /* SequentialXMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C1D60A2E73C7FD0035454B /* SequentialXMLParser.swift */; };
+		B8C1D6112E7411330035454B /* WaveAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C1D6102E7411330035454B /* WaveAnimationView.swift */; };
 		B8C346822E700531009A6551 /* LineViewMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C346812E700531009A6551 /* LineViewMarker.swift */; };
 		B8C346842E701AC9009A6551 /* BatteryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C346832E701AC9009A6551 /* BatteryViewController.swift */; };
 		B8F7F3872E7159E100C4FAB5 /* RealtimeSceneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F7F3862E7159E100C4FAB5 /* RealtimeSceneViewController.swift */; };
@@ -64,6 +65,7 @@
 		B83B84382E6AB851009361A5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B83B843B2E6AB851009361A5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		B8C1D60A2E73C7FD0035454B /* SequentialXMLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequentialXMLParser.swift; sourceTree = "<group>"; };
+		B8C1D6102E7411330035454B /* WaveAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveAnimationView.swift; sourceTree = "<group>"; };
 		B8C346812E700531009A6551 /* LineViewMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineViewMarker.swift; sourceTree = "<group>"; };
 		B8C346832E701AC9009A6551 /* BatteryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryViewController.swift; sourceTree = "<group>"; };
 		B8F7F3862E7159E100C4FAB5 /* RealtimeSceneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealtimeSceneViewController.swift; sourceTree = "<group>"; };
@@ -170,6 +172,7 @@
 			isa = PBXGroup;
 			children = (
 				B8C346832E701AC9009A6551 /* BatteryViewController.swift */,
+				B8C1D6102E7411330035454B /* WaveAnimationView.swift */,
 			);
 			path = BatteryScene;
 			sourceTree = "<group>";
@@ -326,6 +329,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B8C1D6112E7411330035454B /* WaveAnimationView.swift in Sources */,
 				B824F4102E72BC88005B07A0 /* PathSetManager.swift in Sources */,
 				B8C346842E701AC9009A6551 /* BatteryViewController.swift in Sources */,
 				B8C346822E700531009A6551 /* LineViewMarker.swift in Sources */,
