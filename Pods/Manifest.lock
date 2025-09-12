@@ -3,14 +3,29 @@ PODS:
     - DGCharts/Core (= 5.1.0)
   - DGCharts/Core (5.1.0)
   - MyBaseExtension (0.0.6)
+  - RxCocoa (6.9.0):
+    - RxRelay (= 6.9.0)
+    - RxSwift (= 6.9.0)
+  - RxRelay (6.9.0):
+    - RxSwift (= 6.9.0)
+  - RxSwift (6.9.0)
   - SnapKit (5.7.1)
+  - SwiftSVG (2.3.2)
 
 DEPENDENCIES:
   - DGCharts
   - MyBaseExtension
+  - RxCocoa (= 6.9.0)
+  - RxSwift (= 6.9.0)
   - SnapKit
+  - SwiftSVG (~> 2.0)
 
 SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - RxCocoa
+    - RxRelay
+    - RxSwift
+    - SwiftSVG
   trunk:
     - DGCharts
     - MyBaseExtension
@@ -19,8 +34,12 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   DGCharts: 1c6daf585b6cfc78807af44ea690d357c410627f
   MyBaseExtension: e85aca662812e8b5771241a1da2af5e6a9cab2c5
+  RxCocoa: ac16414696ae706516be3e1ab00fcce5bdc9be8a
+  RxRelay: 6b0c930e5cef57d5fe2032571e5e65b78e3cbdb1
+  RxSwift: 31649ace6aceeb422e16ff71c60804f9c3281ed9
   SnapKit: d612e99e678a2d3b95bf60b0705ed0a35c03484a
+  SwiftSVG: ca7f64e403b8ea7ea8eba8c823b83ba4a059834c
 
-PODFILE CHECKSUM: fa90b8b5e88809fb2bd4cd083c8256964fece7ea
+PODFILE CHECKSUM: 3e77ed0ae072c08376f7a533f63efa368fba9fef
 
 COCOAPODS: 1.16.2
