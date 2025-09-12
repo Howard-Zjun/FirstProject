@@ -38,7 +38,7 @@ class RealtimeSceneViewController: UIViewController {
     
     @objc lazy var keepOnLoadViewModel: PowerRquipmentViewModel = {
         let ret = PowerRquipmentViewModel(name: "keepOn Load", power: 0)
-        //
+        ret.connect(label: keepOnLoadValueLab)
         return ret
     }()
     
@@ -191,6 +191,11 @@ class RealtimeSceneViewController: UIViewController {
         return keepOnLoadNameLab
     }()
     
+    lazy var keepOnLoadValueLab: UILabel = {
+        let keepOnLoadValueLab = UILabel()
+        return keepOnLoadValueLab
+    }()
+    
     lazy var additionalLoadImgV: UIImageView = {
         let additionalLoadImgV = UIImageView()
         additionalLoadImgV.image = .init(named: "icon_power_usage_extra_supply")
@@ -250,6 +255,7 @@ class RealtimeSceneViewController: UIViewController {
         view.addSubview(vehicleChargingValueLab)
         view.addSubview(keepOnLoadImgV)
         view.addSubview(keepOnLoadNameLab)
+        view.addSubview(keepOnLoadValueLab)
         view.addSubview(additionalLoadImgV)
         view.addSubview(additionalLoadNameLab)
         view.addSubview(additionalLoadValueLab)
@@ -349,6 +355,11 @@ class RealtimeSceneViewController: UIViewController {
             make.top.equalTo(keepOnLoadImgV.snp.bottom)
             make.height.equalTo(20)
         }
+        keepOnLoadValueLab.snp.makeConstraints { make in
+            make.centerX.equalTo(keepOnLoadNameLab)
+            make.top.equalTo(keepOnLoadNameLab.snp.bottom)
+            make.height.equalTo(58)
+        }
         additionalLoadImgV.snp.makeConstraints { make in
             make.centerX.equalTo(gridPowerImgV)
             make.bottom.equalTo(pathImgV).offset(46.56)
@@ -376,16 +387,28 @@ class RealtimeSceneViewController: UIViewController {
 extension RealtimeSceneViewController {
     
     func configPath() {
-        let circleEnter = "Circle-Enter"
-        let circleOuter = "Circle-Outer"
-        pathSetManager.setSinglePathFrom(fromName: solarViewModel.name, toName: circleEnter, toSVG: "solar——circle".toSVGURL())
-        pathSetManager.setSinglePathFrom(fromName: gridViewModel.name, toName: circleEnter, toSVG: "grid——circle".toSVGURL())
+        pathSetManager.setSinglePathFrom(fromName: solarViewModel.name, toName: "A", toSVG: "solar——circle".toSVGURL())
+        pathSetManager.setSinglePathFrom(fromName: gridViewModel.name, toName: "B", toSVG: "grid——circle".toSVGURL())
         pathSetManager.setSinglePathFrom(fromName: gridViewModel.name, toName: additionalLoadViewModel.name, toSVG: "grid——Additional Load".toSVGURL())
-        pathSetManager.setSinglePathFrom(fromName: circleEnter, toName: circleOuter, toSVG: "circle".toSVGURL())
-        pathSetManager.setSinglePathFrom(fromName: circleOuter, toName: batteryViewModel.name, toSVG: "circle——battery".toSVGURL())
-        pathSetManager.setSinglePathFrom(fromName: circleOuter, toName: vehicleViewModel.name, toSVG: "circle——vehicle".toSVGURL())
-        pathSetManager.setSinglePathFrom(fromName: circleOuter, toName: keepOnLoadViewModel.name, toSVG: "circle——KeepON Load".toSVGURL())
-        pathSetManager.setSinglePathFrom(fromName: circleOuter, toName: additionalLoadViewModel.name, toSVG: "circle——Additional Load".toSVGURL())
+        pathSetManager.setSinglePathFrom(fromName: "B", toName: "A", path: createCirclePath(startAngle: 1.75 * CGFloat.pi, endAngle: 1.25 * CGFloat.pi))
+        pathSetManager.setSinglePathFrom(fromName: "A", toName: "C", path: createCirclePath(startAngle: 1.25 * CGFloat.pi, endAngle: 0.80 * CGFloat.pi))
+        pathSetManager.setSinglePathFrom(fromName: "C", toName: "D", path: createCirclePath(startAngle: 0.82 * CGFloat.pi, endAngle: 0.68 * CGFloat.pi))
+        pathSetManager.setSinglePathFrom(fromName: "D", toName: "E", path: createCirclePath(startAngle: 0.70 * CGFloat.pi, endAngle: 0.25 * CGFloat.pi))
+        pathSetManager.setSinglePathFrom(fromName: "A", toName: batteryViewModel.name, toSVG: "circle——battery".toSVGURL())
+        pathSetManager.setSinglePathFrom(fromName: "C", toName: vehicleViewModel.name, toSVG: "circle——vehicle".toSVGURL())
+        pathSetManager.setSinglePathFrom(fromName: "D", toName: keepOnLoadViewModel.name, toSVG: "circle——KeepON Load".toSVGURL())
+        pathSetManager.setSinglePathFrom(fromName: "E", toName: additionalLoadViewModel.name, toSVG: "circle——Additional Load".toSVGURL())
+    }
+    
+    /// 生成部分圆路径
+    /// - Parameters:
+    ///   - startAngle: 角度
+    ///   - endAngle: 角度
+    /// - Returns: 路径
+    func createCirclePath(startAngle: CGFloat, endAngle: CGFloat) -> UIBezierPath {
+        let path = UIBezierPath()
+        path.addArc(withCenter: .init(x: 104, y: 66), radius: 20, startAngle: startAngle, endAngle: endAngle, clockwise: false)
+        return path
     }
 }
 
@@ -429,11 +452,11 @@ extension RealtimeSceneViewController {
         RunLoop.current.add(usageExtraReduceTimer, forMode: .common)
         self.usageExtraReduceTimer = usageExtraReduceTimer
         
-        let transportTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { [weak self] timer in
+        let transportTimer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { [weak self] timer in
             guard let self = self else { return }
             let source = [solarViewModel.name, gridViewModel.name]
             let useSourceIndex = Int.random(in: 0..<source.count)
-            let to = [batteryViewModel.name, vehicleViewModel.name, additionalLoadViewModel.name]
+            let to = [batteryViewModel.name, vehicleViewModel.name, keepOnLoadViewModel.name, additionalLoadViewModel.name]
             let useToIndex = Int.random(in: 0..<to.count)
             powerTransport(fromName: source[useSourceIndex], toName: to[useToIndex])
         }
@@ -535,14 +558,18 @@ extension RealtimeSceneViewController {
  
     class AnimationLayer: CAShapeLayer {
         
-        // 0.95 是动画头部到达尽头，1是尾部到达尽头
+        var top: CGFloat {
+            0.1
+        }
+        
+        // 0.90 是动画头部到达尽头，1是尾部到达尽头
         var progress: CGFloat = 0 {
             didSet {
                 strokeStart = progress
-                if progress >= 0.95 {
+                if progress >= 1 - top {
                     strokeEnd = 1
                 } else {
-                    strokeEnd = progress + 0.05
+                    strokeEnd = progress + top
                 }
             }
         }
@@ -574,6 +601,8 @@ extension RealtimeSceneViewController {
         
         func startAnimation(endOperation: @escaping (() -> Void)) {
             self.endOperation = endOperation
+            strokeEnd = top
+            strokeStart = 0
             let link = CADisplayLink(target: self, selector: #selector(updateProgress))
             link.preferredFrameRateRange = .init(minimum: 60, maximum: 60)
             link.add(to: .main, forMode: .common)
@@ -594,7 +623,7 @@ extension RealtimeSceneViewController {
                 return
             }
             
-            progress += 0.01
+            progress += 0.005
         }
     }
 }

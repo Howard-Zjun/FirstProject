@@ -30,7 +30,6 @@
 		B83B84402E6AB851009361A5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B83B84342E6AB851009361A5 /* Assets.xcassets */; };
 		B83B84422E6AB851009361A5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B83B84372E6AB851009361A5 /* LaunchScreen.storyboard */; };
 		B83B84432E6AB851009361A5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B83B84392E6AB851009361A5 /* Main.storyboard */; };
-		B8C1D60B2E73C7FD0035454B /* SequentialXMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C1D60A2E73C7FD0035454B /* SequentialXMLParser.swift */; };
 		B8C1D6112E7411330035454B /* WaveAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C1D6102E7411330035454B /* WaveAnimationView.swift */; };
 		B8C346822E700531009A6551 /* LineViewMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C346812E700531009A6551 /* LineViewMarker.swift */; };
 		B8C346842E701AC9009A6551 /* BatteryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C346832E701AC9009A6551 /* BatteryViewController.swift */; };
@@ -64,7 +63,6 @@
 		B83B84362E6AB851009361A5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B83B84382E6AB851009361A5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B83B843B2E6AB851009361A5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		B8C1D60A2E73C7FD0035454B /* SequentialXMLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequentialXMLParser.swift; sourceTree = "<group>"; };
 		B8C1D6102E7411330035454B /* WaveAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveAnimationView.swift; sourceTree = "<group>"; };
 		B8C346812E700531009A6551 /* LineViewMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineViewMarker.swift; sourceTree = "<group>"; };
 		B8C346832E701AC9009A6551 /* BatteryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryViewController.swift; sourceTree = "<group>"; };
@@ -154,7 +152,6 @@
 			children = (
 				B8F7F3862E7159E100C4FAB5 /* RealtimeSceneViewController.swift */,
 				B824F40F2E72BC88005B07A0 /* PathSetManager.swift */,
-				B8C1D60A2E73C7FD0035454B /* SequentialXMLParser.swift */,
 			);
 			path = RealtimeScene;
 			sourceTree = "<group>";
@@ -335,7 +332,6 @@
 				B8C346822E700531009A6551 /* LineViewMarker.swift in Sources */,
 				B83B843D2E6AB851009361A5 /* AppDelegate.swift in Sources */,
 				B8F7F3872E7159E100C4FAB5 /* RealtimeSceneViewController.swift in Sources */,
-				B8C1D60B2E73C7FD0035454B /* SequentialXMLParser.swift in Sources */,
 				B80A9C572E6E8256001A495C /* EnergyStatsViewController.swift in Sources */,
 				B83B843F2E6AB851009361A5 /* ViewController.swift in Sources */,
 			);

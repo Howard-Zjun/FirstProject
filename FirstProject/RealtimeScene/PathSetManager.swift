@@ -14,36 +14,49 @@ class PathSetManager: NSObject {
     
     var pointSet: Set<String> = []
     
-    var relationMap: [String : PointRelation] = [:]
+    var relationMap: [String : StartPointRelation] = [:]
     
     var handleParser: [XMLParser : ParseDataModel] = [:]
+    
+    func setSinglePathFrom(fromName: String, toName: String, path: UIBezierPath) {
+        pointSet.insert(fromName)
+        pointSet.insert(toName)
+        var relation: StartPointRelation?
+        if let tmp = relationMap[fromName] {
+            relation = tmp
+        } else {
+            relation = .init(pointName: fromName)
+        }
+        relation?.toPoints.append(.init(pointName: toName, path: path))
+        relationMap[fromName] = relation
+    }
     
     func setSinglePathFrom(fromName: String, toName: String, toSVG: URL) {
         pointSet.insert(fromName)
         pointSet.insert(toName)
-        var relation: PointRelation?
+        var relation: StartPointRelation?
         if let tmp = relationMap[fromName] {
             relation = tmp
         } else {
             relation = .init(pointName: fromName)
         }
         
-        relation?.toPointArr.append((toName, toSVG))
+        relation?.toPoints.append(.init(pointName: toName, svgURL: toSVG))
         relationMap[fromName] = relation
     }
     
     func getPath(fromName: String, toName: String, completion: @escaping (UIBezierPath?, PathError?) -> Void) {
         print("[\(String(describing: Self.self))-\(#function)-\(Thread.current):\(#line)] 获取\(fromName)到\(toName)的路径")
         do {
-            let urls: [URL] = try getPathURL(fromName: fromName, toName: toName)
-            parseURL(urls: urls, completion: completion)
+            let destinations: [DestinationRelation] = try getPathURL(fromName: fromName, toName: toName)
+            parseURL(destinations: destinations, completion: completion)
         } catch {
             print("[\(String(describing: Self.self))-\(#function)-\(Thread.current):\(#line)] 错误: \(error.localizedDescription)")
             completion(nil, error)
         }
     }
     
-    private func getPathURL(fromName: String, toName: String) throws(PathError) -> [URL] {
+    private func getPathURL(fromName: String, toName: String) throws(PathError) -> [DestinationRelation] {
         guard pointSet.contains(fromName) else {
             throw .unExistFromPoint
         }
@@ -53,7 +66,7 @@ class PathSetManager: NSObject {
         }
         
         // 使用广度优先搜索(BFS)寻找最短路径
-        var queue: [(currentPoint: String, path: [URL])] = [(fromName, [])]
+        var queue: [(currentPoint: String, path: [DestinationRelation])] = [(fromName, [])]
         var visited: Set<String> = [fromName]
         
         while !queue.isEmpty {
@@ -64,18 +77,19 @@ class PathSetManager: NSObject {
                 continue
             }
             
-            for (nextPoint, pathURL) in relations.toPointArr {
+            for toPoint in relations.toPoints {
+                let nextPoint = toPoint.pointName
                 if nextPoint == toName {
                     // 找到终点，返回完整路径
-                    let ret = currentPath + [pathURL]
-                    print("[\(String(describing: Self.self))-\(#function)-\(Thread.current):\(#line)] 从\(fromName)到\(toName)的路径是\(ret.map({ $0.lastPathComponent }))")
+                    let ret = currentPath + [toPoint]
+                    print("[\(String(describing: Self.self))-\(#function)-\(Thread.current):\(#line)] 找到从\(fromName)到\(toName)的路径")
                     return ret
                 }
                 
                 // 未访问过的点加入队列
                 if !visited.contains(nextPoint) {
                     visited.insert(nextPoint)
-                    queue.append((nextPoint, currentPath + [pathURL]))
+                    queue.append((nextPoint, currentPath + [toPoint]))
                 }
             }
         }
@@ -84,15 +98,17 @@ class PathSetManager: NSObject {
         throw PathError.unreachable
     }
     
-    func parseURL(urls: [URL], completion: ((UIBezierPath?, PathError?) -> Void)? = nil) {
-        for url in urls {
-            if parseFinishURLMap[url] == nil {
+    func parseURL(destinations: [DestinationRelation], completion: ((UIBezierPath?, PathError?) -> Void)? = nil) {
+        for tmp in destinations {
+            if let path = tmp.path {
+                
+            } else if let url = tmp.svgURL, parseFinishURLMap[url] == nil {
                 print("[\(String(describing: Self.self))-\(#function)-\(Thread.current):\(#line)] 将\(url.lastPathComponent)解析")
                 do {
                     let urlData = try Data(contentsOf: url)
                     let parser = XMLParser(data: urlData)
                     parser.delegate = self
-                    handleParser[parser] = .init(totalURL: urls, parseURL: url, completion: completion)
+                    handleParser[parser] = .init(destinations: destinations, parseURL: url, completion: completion)
                     parser.parse()
                     return
                 } catch {
@@ -102,8 +118,10 @@ class PathSetManager: NSObject {
         }
         
         var paths: [UIBezierPath] = []
-        for url in urls {
-            if let path = parseFinishURLMap[url] {
+        for destination in destinations {
+            if let path = destination.path {
+                paths.append(path)
+            } else if let url = destination.svgURL, let path = parseFinishURLMap[url] {
                 paths.append(path)
             }
         }
@@ -155,7 +173,7 @@ extension PathSetManager: XMLParserDelegate {
             parseFinishURLMap[model.parseURL] = path
             handleParser[parser] = nil
             DispatchQueue.main.asyncAfter(wallDeadline: .now() + 0.5) { [weak self] in
-                self?.parseURL(urls: model.totalURL, completion: model.completion ?? nil)
+                self?.parseURL(destinations: model.destinations, completion: model.completion ?? nil)
             }
         } else {
             print("[\(String(describing: Self.self))-\(#function)-\(Thread.current):\(#line)] 丢失")
@@ -166,20 +184,47 @@ extension PathSetManager: XMLParserDelegate {
 
 extension PathSetManager {
     
-    class PointRelation {
+    class StartPointRelation {
         
         let pointName: String
         
-        var toPointArr: [(toName: String, path: URL)] = []
+        var toPoints: [DestinationRelation] = []
+        
+//        var toPointArr: [(toName: String, path: URL)] = []
         
         init(pointName: String) {
             self.pointName = pointName
         }
     }
     
+    class DestinationRelation {
+        
+        let pointName: String
+        
+        var svgURL: URL?
+        
+        var path: UIBezierPath?
+        
+        init(pointName: String, svgURL: URL) {
+            self.pointName = pointName
+            self.svgURL = svgURL
+            self.path = nil
+        }
+        
+        init(pointName: String, path: UIBezierPath) {
+            self.pointName = pointName
+            self.svgURL = nil
+            self.path = path
+        }
+    }
+    
+}
+
+extension PathSetManager {
+    
     class ParseDataModel: NSObject {
         
-        let totalURL: [URL]
+        let destinations: [DestinationRelation]
         
         var parseURL: URL
         
@@ -187,8 +232,8 @@ extension PathSetManager {
         
         var result: ParseResult?
         
-        init(totalURL: [URL], parseURL: URL, completion: ((UIBezierPath?, PathError?) -> Void)? = nil) {
-            self.totalURL = totalURL
+        init(destinations: [DestinationRelation], parseURL: URL, completion: ((UIBezierPath?, PathError?) -> Void)? = nil) {
+            self.destinations = destinations
             self.parseURL = parseURL
             self.completion = completion
         }
