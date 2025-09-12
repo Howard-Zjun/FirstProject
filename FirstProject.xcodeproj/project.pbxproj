@@ -9,19 +9,53 @@
 /* Begin PBXBuildFile section */
 		957997164F8DCB5F351FCD1D /* Pods_FirstProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40FDADBC3FD49B9630877224 /* Pods_FirstProject.framework */; };
 		B80A9C572E6E8256001A495C /* EnergyStatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80A9C562E6E8256001A495C /* EnergyStatsViewController.swift */; };
+		B824F4002E72AEC3005B07A0 /* circle——vehicle.svg in Resources */ = {isa = PBXBuildFile; fileRef = B824F3FA2E72AEC3005B07A0 /* circle——vehicle.svg */; };
+		B824F4012E72AEC3005B07A0 /* grid——circle.svg in Resources */ = {isa = PBXBuildFile; fileRef = B824F3FC2E72AEC3005B07A0 /* grid——circle.svg */; };
+		B824F4022E72AEC3005B07A0 /* grid——Additional Load.svg in Resources */ = {isa = PBXBuildFile; fileRef = B824F3FB2E72AEC3005B07A0 /* grid——Additional Load.svg */; };
+		B824F4032E72AEC3005B07A0 /* circle.svg in Resources */ = {isa = PBXBuildFile; fileRef = B824F3F42E72AEC3005B07A0 /* circle.svg */; };
+		B824F4042E72AEC3005B07A0 /* circle——solar.svg in Resources */ = {isa = PBXBuildFile; fileRef = B824F3F92E72AEC3005B07A0 /* circle——solar.svg */; };
+		B824F4052E72AEC3005B07A0 /* Additional Load——grid.svg in Resources */ = {isa = PBXBuildFile; fileRef = B824F3F22E72AEC3005B07A0 /* Additional Load——grid.svg */; };
+		B824F4062E72AEC3005B07A0 /* battery——circle.svg in Resources */ = {isa = PBXBuildFile; fileRef = B824F3F32E72AEC3005B07A0 /* battery——circle.svg */; };
+		B824F4072E72AEC3005B07A0 /* circle——Additional Load.svg in Resources */ = {isa = PBXBuildFile; fileRef = B824F3F52E72AEC3005B07A0 /* circle——Additional Load.svg */; };
+		B824F4082E72AEC3005B07A0 /* Additional Load——circle.svg in Resources */ = {isa = PBXBuildFile; fileRef = B824F3F12E72AEC3005B07A0 /* Additional Load——circle.svg */; };
+		B824F4092E72AEC3005B07A0 /* solar——circle.svg in Resources */ = {isa = PBXBuildFile; fileRef = B824F3FE2E72AEC3005B07A0 /* solar——circle.svg */; };
+		B824F40A2E72AEC3005B07A0 /* circle——grid.svg in Resources */ = {isa = PBXBuildFile; fileRef = B824F3F72E72AEC3005B07A0 /* circle——grid.svg */; };
+		B824F40B2E72AEC3005B07A0 /* circle——KeepON Load.svg in Resources */ = {isa = PBXBuildFile; fileRef = B824F3F82E72AEC3005B07A0 /* circle——KeepON Load.svg */; };
+		B824F40C2E72AEC3005B07A0 /* vehicle——circle.svg in Resources */ = {isa = PBXBuildFile; fileRef = B824F3FF2E72AEC3005B07A0 /* vehicle——circle.svg */; };
+		B824F40D2E72AEC3005B07A0 /* KeepON Load——circle.svg in Resources */ = {isa = PBXBuildFile; fileRef = B824F3FD2E72AEC3005B07A0 /* KeepON Load——circle.svg */; };
+		B824F40E2E72AEC3005B07A0 /* circle——battery.svg in Resources */ = {isa = PBXBuildFile; fileRef = B824F3F62E72AEC3005B07A0 /* circle——battery.svg */; };
+		B824F4102E72BC88005B07A0 /* PathSetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B824F40F2E72BC88005B07A0 /* PathSetManager.swift */; };
 		B83B843D2E6AB851009361A5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B83B84332E6AB851009361A5 /* AppDelegate.swift */; };
 		B83B843F2E6AB851009361A5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B83B843B2E6AB851009361A5 /* ViewController.swift */; };
 		B83B84402E6AB851009361A5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B83B84342E6AB851009361A5 /* Assets.xcassets */; };
 		B83B84422E6AB851009361A5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B83B84372E6AB851009361A5 /* LaunchScreen.storyboard */; };
 		B83B84432E6AB851009361A5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B83B84392E6AB851009361A5 /* Main.storyboard */; };
+		B8C1D60B2E73C7FD0035454B /* SequentialXMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C1D60A2E73C7FD0035454B /* SequentialXMLParser.swift */; };
 		B8C346822E700531009A6551 /* LineViewMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C346812E700531009A6551 /* LineViewMarker.swift */; };
 		B8C346842E701AC9009A6551 /* BatteryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C346832E701AC9009A6551 /* BatteryViewController.swift */; };
+		B8F7F3872E7159E100C4FAB5 /* RealtimeSceneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F7F3862E7159E100C4FAB5 /* RealtimeSceneViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		40FDADBC3FD49B9630877224 /* Pods_FirstProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FirstProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		59D6CF0E17D69BEAD9F79268 /* Pods-FirstProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FirstProject.debug.xcconfig"; path = "Target Support Files/Pods-FirstProject/Pods-FirstProject.debug.xcconfig"; sourceTree = "<group>"; };
 		B80A9C562E6E8256001A495C /* EnergyStatsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyStatsViewController.swift; sourceTree = "<group>"; };
+		B824F3F12E72AEC3005B07A0 /* Additional Load——circle.svg */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Additional Load——circle.svg"; sourceTree = "<group>"; };
+		B824F3F22E72AEC3005B07A0 /* Additional Load——grid.svg */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Additional Load——grid.svg"; sourceTree = "<group>"; };
+		B824F3F32E72AEC3005B07A0 /* battery——circle.svg */ = {isa = PBXFileReference; lastKnownFileType = text; path = "battery——circle.svg"; sourceTree = "<group>"; };
+		B824F3F42E72AEC3005B07A0 /* circle.svg */ = {isa = PBXFileReference; lastKnownFileType = text; path = circle.svg; sourceTree = "<group>"; };
+		B824F3F52E72AEC3005B07A0 /* circle——Additional Load.svg */ = {isa = PBXFileReference; lastKnownFileType = text; path = "circle——Additional Load.svg"; sourceTree = "<group>"; };
+		B824F3F62E72AEC3005B07A0 /* circle——battery.svg */ = {isa = PBXFileReference; lastKnownFileType = text; path = "circle——battery.svg"; sourceTree = "<group>"; };
+		B824F3F72E72AEC3005B07A0 /* circle——grid.svg */ = {isa = PBXFileReference; lastKnownFileType = text; path = "circle——grid.svg"; sourceTree = "<group>"; };
+		B824F3F82E72AEC3005B07A0 /* circle——KeepON Load.svg */ = {isa = PBXFileReference; lastKnownFileType = text; path = "circle——KeepON Load.svg"; sourceTree = "<group>"; };
+		B824F3F92E72AEC3005B07A0 /* circle——solar.svg */ = {isa = PBXFileReference; lastKnownFileType = text; path = "circle——solar.svg"; sourceTree = "<group>"; };
+		B824F3FA2E72AEC3005B07A0 /* circle——vehicle.svg */ = {isa = PBXFileReference; lastKnownFileType = text; path = "circle——vehicle.svg"; sourceTree = "<group>"; };
+		B824F3FB2E72AEC3005B07A0 /* grid——Additional Load.svg */ = {isa = PBXFileReference; lastKnownFileType = text; path = "grid——Additional Load.svg"; sourceTree = "<group>"; };
+		B824F3FC2E72AEC3005B07A0 /* grid——circle.svg */ = {isa = PBXFileReference; lastKnownFileType = text; path = "grid——circle.svg"; sourceTree = "<group>"; };
+		B824F3FD2E72AEC3005B07A0 /* KeepON Load——circle.svg */ = {isa = PBXFileReference; lastKnownFileType = text; path = "KeepON Load——circle.svg"; sourceTree = "<group>"; };
+		B824F3FE2E72AEC3005B07A0 /* solar——circle.svg */ = {isa = PBXFileReference; lastKnownFileType = text; path = "solar——circle.svg"; sourceTree = "<group>"; };
+		B824F3FF2E72AEC3005B07A0 /* vehicle——circle.svg */ = {isa = PBXFileReference; lastKnownFileType = text; path = "vehicle——circle.svg"; sourceTree = "<group>"; };
+		B824F40F2E72BC88005B07A0 /* PathSetManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathSetManager.swift; sourceTree = "<group>"; };
 		B83B841B2E6AB838009361A5 /* FirstProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FirstProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B83B84332E6AB851009361A5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B83B84342E6AB851009361A5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -29,8 +63,10 @@
 		B83B84362E6AB851009361A5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B83B84382E6AB851009361A5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B83B843B2E6AB851009361A5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		B8C1D60A2E73C7FD0035454B /* SequentialXMLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequentialXMLParser.swift; sourceTree = "<group>"; };
 		B8C346812E700531009A6551 /* LineViewMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineViewMarker.swift; sourceTree = "<group>"; };
 		B8C346832E701AC9009A6551 /* BatteryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryViewController.swift; sourceTree = "<group>"; };
+		B8F7F3862E7159E100C4FAB5 /* RealtimeSceneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealtimeSceneViewController.swift; sourceTree = "<group>"; };
 		BCB4A0E12EFF3257A6562898 /* Pods-FirstProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FirstProject.release.xcconfig"; path = "Target Support Files/Pods-FirstProject/Pods-FirstProject.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -49,16 +85,31 @@
 		B80A9C592E6E8648001A495C /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				B80A9C5A2E6E8653001A495C /* Image */,
+				B824F3F02E72AEB2005B07A0 /* Path */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
 		};
-		B80A9C5A2E6E8653001A495C /* Image */ = {
+		B824F3F02E72AEB2005B07A0 /* Path */ = {
 			isa = PBXGroup;
 			children = (
+				B824F3F12E72AEC3005B07A0 /* Additional Load——circle.svg */,
+				B824F3F22E72AEC3005B07A0 /* Additional Load——grid.svg */,
+				B824F3F32E72AEC3005B07A0 /* battery——circle.svg */,
+				B824F3F42E72AEC3005B07A0 /* circle.svg */,
+				B824F3F52E72AEC3005B07A0 /* circle——Additional Load.svg */,
+				B824F3F62E72AEC3005B07A0 /* circle——battery.svg */,
+				B824F3F72E72AEC3005B07A0 /* circle——grid.svg */,
+				B824F3F82E72AEC3005B07A0 /* circle——KeepON Load.svg */,
+				B824F3F92E72AEC3005B07A0 /* circle——solar.svg */,
+				B824F3FA2E72AEC3005B07A0 /* circle——vehicle.svg */,
+				B824F3FB2E72AEC3005B07A0 /* grid——Additional Load.svg */,
+				B824F3FC2E72AEC3005B07A0 /* grid——circle.svg */,
+				B824F3FD2E72AEC3005B07A0 /* KeepON Load——circle.svg */,
+				B824F3FE2E72AEC3005B07A0 /* solar——circle.svg */,
+				B824F3FF2E72AEC3005B07A0 /* vehicle——circle.svg */,
 			);
-			path = Image;
+			path = Path;
 			sourceTree = "<group>";
 		};
 		B83B84122E6AB838009361A5 = {
@@ -89,11 +140,38 @@
 				B83B84372E6AB851009361A5 /* LaunchScreen.storyboard */,
 				B83B84392E6AB851009361A5 /* Main.storyboard */,
 				B83B843B2E6AB851009361A5 /* ViewController.swift */,
-				B80A9C562E6E8256001A495C /* EnergyStatsViewController.swift */,
-				B8C346832E701AC9009A6551 /* BatteryViewController.swift */,
-				B8C346812E700531009A6551 /* LineViewMarker.swift */,
+				B8C25E8D2E727C4800D74D0E /* EnergyScene */,
+				B8C25E8C2E727C3800D74D0E /* RealtimeScene */,
+				B8C25E8E2E727C6C00D74D0E /* BatteryScene */,
 			);
 			path = FirstProject;
+			sourceTree = "<group>";
+		};
+		B8C25E8C2E727C3800D74D0E /* RealtimeScene */ = {
+			isa = PBXGroup;
+			children = (
+				B8F7F3862E7159E100C4FAB5 /* RealtimeSceneViewController.swift */,
+				B824F40F2E72BC88005B07A0 /* PathSetManager.swift */,
+				B8C1D60A2E73C7FD0035454B /* SequentialXMLParser.swift */,
+			);
+			path = RealtimeScene;
+			sourceTree = "<group>";
+		};
+		B8C25E8D2E727C4800D74D0E /* EnergyScene */ = {
+			isa = PBXGroup;
+			children = (
+				B8C346812E700531009A6551 /* LineViewMarker.swift */,
+				B80A9C562E6E8256001A495C /* EnergyStatsViewController.swift */,
+			);
+			path = EnergyScene;
+			sourceTree = "<group>";
+		};
+		B8C25E8E2E727C6C00D74D0E /* BatteryScene */ = {
+			isa = PBXGroup;
+			children = (
+				B8C346832E701AC9009A6551 /* BatteryViewController.swift */,
+			);
+			path = BatteryScene;
 			sourceTree = "<group>";
 		};
 		BEA90B710B6D1BA40358CD1C /* Frameworks */ = {
@@ -176,6 +254,21 @@
 			files = (
 				B83B84402E6AB851009361A5 /* Assets.xcassets in Resources */,
 				B83B84422E6AB851009361A5 /* LaunchScreen.storyboard in Resources */,
+				B824F4002E72AEC3005B07A0 /* circle——vehicle.svg in Resources */,
+				B824F4012E72AEC3005B07A0 /* grid——circle.svg in Resources */,
+				B824F4022E72AEC3005B07A0 /* grid——Additional Load.svg in Resources */,
+				B824F4032E72AEC3005B07A0 /* circle.svg in Resources */,
+				B824F4042E72AEC3005B07A0 /* circle——solar.svg in Resources */,
+				B824F4052E72AEC3005B07A0 /* Additional Load——grid.svg in Resources */,
+				B824F4062E72AEC3005B07A0 /* battery——circle.svg in Resources */,
+				B824F4072E72AEC3005B07A0 /* circle——Additional Load.svg in Resources */,
+				B824F4082E72AEC3005B07A0 /* Additional Load——circle.svg in Resources */,
+				B824F4092E72AEC3005B07A0 /* solar——circle.svg in Resources */,
+				B824F40A2E72AEC3005B07A0 /* circle——grid.svg in Resources */,
+				B824F40B2E72AEC3005B07A0 /* circle——KeepON Load.svg in Resources */,
+				B824F40C2E72AEC3005B07A0 /* vehicle——circle.svg in Resources */,
+				B824F40D2E72AEC3005B07A0 /* KeepON Load——circle.svg in Resources */,
+				B824F40E2E72AEC3005B07A0 /* circle——battery.svg in Resources */,
 				B83B84432E6AB851009361A5 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -233,9 +326,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B824F4102E72BC88005B07A0 /* PathSetManager.swift in Sources */,
 				B8C346842E701AC9009A6551 /* BatteryViewController.swift in Sources */,
 				B8C346822E700531009A6551 /* LineViewMarker.swift in Sources */,
 				B83B843D2E6AB851009361A5 /* AppDelegate.swift in Sources */,
+				B8F7F3872E7159E100C4FAB5 /* RealtimeSceneViewController.swift in Sources */,
+				B8C1D60B2E73C7FD0035454B /* SequentialXMLParser.swift in Sources */,
 				B80A9C572E6E8256001A495C /* EnergyStatsViewController.swift in Sources */,
 				B83B843F2E6AB851009361A5 /* ViewController.swift in Sources */,
 			);
